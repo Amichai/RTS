@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div ng-app="root">
+    <div ng-controller="homeController" id="home" ng-cloak>
+        <h4>{{myConnectionID}}</h4>
+        <h2>All Connections:</h2>
+        <div ng-repeat="c in clients track by $index">
+            {{c}}
+        </div>
+        <h2>Waiting Tables:</h2>
+        <div ng-repeat="c in tables track by $index">
+            <button class="btn btn-sm btn-default" ng-click="joinTable(c)">Join</button>
+            {{c}}
+        </div>
+
+        <button class="btn btn-large" ng-click="buttonPress()">Test Button</button>
+        <button class="btn btn-large" ng-click="createTable()">Create Table</button>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/angularcontrollers/homeController.js"></script>
+    <script src='~/signalr/js'></script>
+}
