@@ -2,6 +2,7 @@
 .controller('tableController', ['$scope', '$http', function ($scope, $http) {
     $scope.messages = new Array();
 
+
     var hub = $.connection.TableHub;
     $.connection.hub.start().done(function () {
         hub.server.myConnectionID(QueryString.username).done(function (result) {
@@ -19,7 +20,7 @@
     }
 
     hub.client.State = function (state) {
-        $scope.messages = result;
+        $scope.messages = state;
         $scope.$apply();
     }
 
@@ -45,6 +46,8 @@
         }
         return query_string;
     }();
+
+    $scope.username = QueryString.username;
 }]);
 
 

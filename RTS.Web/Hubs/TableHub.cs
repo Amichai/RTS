@@ -21,8 +21,9 @@ namespace RTS.Web.Hubs {
         public List<string> NewMessage(string username, int tableID, string text) {
             var t = TableManager.Update(tableID, text, username);
             var state = TableManager.GetState(tableID);
-            var otherPlayers = t.Users.Where(i => i.Name != username).Select(i => i.ConnectionID);
-            Clients.Clients(otherPlayers.ToList()).State(state);
+            
+            var otherPlayers = t.Users.Where(i => i.Name != username).Select(i => UserManager.Usernames[i.Name]).ToList();
+            Clients.Clients(otherPlayers).State(state);
             return state;
         }
 

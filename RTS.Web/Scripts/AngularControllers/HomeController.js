@@ -19,13 +19,18 @@
         $scope.$apply();
     }
 
+    $scope.updateName = function () {
+        hub.server.updateName($scope.usernameInput).done(function (success) {
+            if (success) {
+                $scope.username = $scope.usernameInput;
+                $scope.$apply();
+            }
+        });
+    }
+
     hub.client.JoinTable = function (tableID) {
         console.log("join table: " + tableID);
         window.location.href = '/table/index?id=' + tableID + '&username=' + $scope.username ;
-    }
-
-    hub.client.Test = function () {
-        console.log('testing');
     }
 
     $scope.joinTable = function(id) {
@@ -43,12 +48,6 @@
         console.log('got waiting tables');
         $scope.tables = tables;
     });
-
-    $scope.buttonPress = function () {
-        hub.server.buttonPress().done(function(result){
-            console.log(result);
-        });
-    }
 
     $scope.createTable = function () {
         hub.server.createTable().done(function () {

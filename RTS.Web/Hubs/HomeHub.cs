@@ -14,21 +14,16 @@ namespace RTS.Web.Hubs {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public HomeHub() {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<HomeHub>();
-            //context.Clients.All.ConnectionEstablished();    
-        }
-
-        private static int hitCounter = 0;
-
-        public int ButtonPress() {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<HomeHub>();
-            
-            context.Clients.All.Test();
-            return ++hitCounter;
         }
 
         public string MyConnectionID() {
             return Context.ConnectionId;
+        }
+
+        public bool UpdateName(string name) {
+            var id = Context.ConnectionId;
+            UserManager.Get(id).Name = name;
+            return true;
         }
 
         ///Todo: we need to work fully interms of persistent and unique usernames!
