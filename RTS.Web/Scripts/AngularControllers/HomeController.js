@@ -39,6 +39,10 @@
         });
     }
 
+    hub.client.SetUsername = function (name) {
+        $scope.username = name;
+    }
+
     $http.get(baseUrl + 'api/homeapi/getConnectedClients').success(function (clients) {
         console.log('got connected clients');
         $scope.clients = clients;

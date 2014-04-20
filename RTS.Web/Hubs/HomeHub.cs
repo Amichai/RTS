@@ -54,9 +54,14 @@ namespace RTS.Web.Hubs {
             Clients.All.waitingTablesChanged(UserManager.WaitingTables());
             //return UserManager.TableIds;
         }
+        private static int userCounter = 1;
 
         public override Task OnConnected() {
             UserManager.Add(Context.ConnectionId);
+            var username = "anonymous" + userCounter++;
+            Clients.Caller.SetUsername(username);
+            var id = Context.ConnectionId;
+            UserManager.Get(id).Name = username;
             Clients.All.connectedClientsChanged(UserManager.ConnectedUsers());
             return base.OnConnected();
         }
