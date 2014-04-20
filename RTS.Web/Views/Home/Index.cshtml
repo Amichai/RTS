@@ -5,6 +5,10 @@
 <div ng-app="root">
     <div ng-controller="homeController" id="home" ng-cloak>
         <h4>{{myConnectionID}}</h4>
+        <div>
+            <span>User name:</span>
+            <input type="text" ng-model="username" />
+        </div>
         <h2>All Connections:</h2>
         <div ng-repeat="c in clients track by $index">
             {{c}}

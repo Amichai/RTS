@@ -7,20 +7,12 @@ using System.Web.Http;
 
 namespace RTS.Web.Controllers.ApiControllers {
     public class HomeAPIController : ApiController {
-        public IEnumerable<string> Get() {
-            return new string[] { "value1", "value2" };
-        }
-
-        public string Get(int id) {
-            return "value";
-        }
-
         public List<string> GetConnectedClients() {
-            return Hubs.UserHandler.ConnectedUsers();
+            return Hubs.UserManager.ConnectedUsers();
         }
 
         public List<string> GetWaitingTables() {
-            return Hubs.UserHandler.WaitingTables();
+            return Hubs.UserManager.WaitingTables();
         }
 
         public void Post([FromBody]string value) {

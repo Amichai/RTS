@@ -31,48 +31,61 @@ namespace RTS.Web.Hubs {
             return Context.ConnectionId;
         }
 
+        ///Todo: we need to work fully interms of persistent and unique usernames!
+
         public bool JoinTable(string id1, string id2) {
+            var table = Table.Create();
+            var tableID = table.ID;
             ///create a new table
             ///determine a unique table id
-            //Clients.Client(id2).JoinTable(tableID)
-            //Clients.Client(id1).JoinTable(tableID)
-
+            ///
+            TableManager.Add(table);
+            var u1 = UserManager.Get(id1);
+            var u2 = UserManager.Get(id2);
+            u1.State = UserState.Playing;
+            u2.State = UserState.Playing;
+            Clients.Client(id1).JoinTable(tableID);
+            Clients.Client(id2).JoinTable(tableID);
+            table.Users.Add(u1);
+            table.Users.Add(u2);
             return true;
         }
 
         public void CreateTable() {
-            var u = UserHandler.Users.Where(i => i.ConnectionID == Context.ConnectionId).SingleOrDefault();
+            var u = UserManager.Users.Where(i => i.ConnectionID == Context.ConnectionId).SingleOrDefault();
             if (u != null) {
-                u.WaitingAtTable = true;
+                u.State = UserState.WaitingAtTable;
             }
-            Clients.All.waitingTablesChanged(UserHandler.WaitingTables());
-            //return UserHandler.TableIds;
+            Clients.All.waitingTablesChanged(UserManager.WaitingTables());
+            //return UserManager.TableIds;
         }
 
         public override Task OnConnected() {
-            UserHandler.Add(Context.ConnectionId);
-            Clients.All.connectedClientsChanged(UserHandler.ConnectedUsers());
+            UserManager.Add(Context.ConnectionId);
+            Clients.All.connectedClientsChanged(UserManager.ConnectedUsers());
             return base.OnConnected();
         }
 
         public override Task OnDisconnected() {
             var connectionID = Context.ConnectionId;
-            var match = UserHandler.Users.Where(i => i.ConnectionID == connectionID).SingleOrDefault();
+            var match = UserManager.Users.Where(i => i.ConnectionID == connectionID).SingleOrDefault();
             if (match != null) {
-                UserHandler.Remove(connectionID);
-                Clients.All.connectedClientsChanged(UserHandler.ConnectedUsers());
-                if (match.WaitingAtTable) {
-                    Clients.All.waitingTablesChanged(UserHandler.WaitingTables());
+                UserManager.Remove(connectionID);
+                Clients.All.connectedClientsChanged(UserManager.ConnectedUsers());
+                if (match.State == UserState.WaitingAtTable) {
+                    Clients.All.waitingTablesChanged(UserManager.WaitingTables());
                 }
             }
             return base.OnDisconnected();
         }
     }
 
-    public static class UserHandler {
+    public static class UserManager {
+
+        public static Dictionary<string, string> Usernames = new Dictionary<string,string>();
         public static List<ConnectedUser> Users = new List<ConnectedUser>();
         public static List<string> WaitingTables() {
-            return Users.Where(i => i.WaitingAtTable).Select(i => i.ConnectionID).ToList();
+            return Users.Where(i => i.State == UserState.WaitingAtTable).Select(i => i.ConnectionID).ToList();
         }
 
         public static List<string> ConnectedUsers() {
@@ -86,15 +99,16 @@ namespace RTS.Web.Hubs {
             }
         }
 
+        public static ConnectedUser Get(string connectionID) {
+            return Users.Where(i => i.ConnectionID == connectionID).SingleOrDefault();
+        }
+
         public static void Add(string connectionID) {
             ///check that this user doesn't exist already
             if (Users.Where(i => i.ConnectionID == connectionID).Count() > 0) {
                 return;
             }
-            UserHandler.Users.Add(new ConnectedUser(connectionID));
+            Users.Add(new ConnectedUser(connectionID));
         }
-
-        //public static List<string> ConnectedIds = new List<string>();
-        //public static List<string> TableIds = new List<string>();
     }
 }

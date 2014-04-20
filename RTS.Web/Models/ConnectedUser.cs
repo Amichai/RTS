@@ -8,10 +8,11 @@ namespace RTS.Web.Models {
         public ConnectedUser(string connectionID) {
             this.Name = "Annonymous";
             this.ConnectionID = connectionID;
-            this.WaitingAtTable = false;
+            this.State = UserState.Idle;
         }
         public string Name { get; set; }
         public string ConnectionID { get; set; }
-        public bool WaitingAtTable { get; set; }
+        public UserState State { get; set; }
     }
+    public enum UserState { WaitingAtTable, Playing, Idle };
 }

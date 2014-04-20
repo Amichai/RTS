@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<div ng-app="root">
+    <div ng-controller="tableController" ng-cloak>
+        
+        <h4>{{myConnectionID}}</h4>
+
+        <div ng-repeat="m in messages track by $index">
+            {{m}}
+        </div>
+        <div>
+            <input ng-model="inputText" type="text" ng-enter="addMessage()" />
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/angularcontrollers/tableController.js"></script>
+    <script src='~/signalr/js'></script>
+}

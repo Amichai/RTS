@@ -19,6 +19,11 @@
         $scope.$apply();
     }
 
+    hub.client.JoinTable = function (tableID) {
+        console.log("join table: " + tableID);
+        window.location.href = '/table/index?id=' + tableID + '&username=' + $scope.username ;
+    }
+
     hub.client.Test = function () {
         console.log('testing');
     }
