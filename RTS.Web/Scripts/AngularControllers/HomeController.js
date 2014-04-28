@@ -33,8 +33,8 @@
         window.location.href = '/table/index?id=' + tableID + '&username=' + $scope.username ;
     }
 
-    $scope.joinTable = function(id) {
-        hub.server.joinTable(id, $scope.myConnectionID).done(function (result) {
+    $scope.joinTable = function (table) {
+        hub.server.joinTable(table.Users[0].ConnectionID, $scope.myConnectionID).done(function (result) {
 
         });
     }

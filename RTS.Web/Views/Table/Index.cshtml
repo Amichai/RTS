@@ -1,14 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Table";
 }
 
-<h2>Index</h2>
+
 
 
 <div ng-app="root">
     <div ng-controller="tableController" ng-cloak>
+        <h2>Table - {{tableID}}</h2>
         <h4>{{username}}</h4>        
-        <h4>{{myConnectionID}}</h4>
+        <h3>Connected:</h3>
+        <div ng-repeat="u in table.Users">
+            {{u.Name}}
+        </div>
+
+        <h3>Board States:</h3>
 
         <div ng-repeat="m in messages track by $index">
             {{m}}

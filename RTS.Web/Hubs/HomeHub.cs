@@ -23,22 +23,20 @@ namespace RTS.Web.Hubs {
         public bool UpdateName(string name) {
             var id = Context.ConnectionId;
             UserManager.Get(id).Name = name;
+            Clients.All.connectedClientsChanged(UserManager.ConnectedUsers());
             return true;
         }
 
         ///Todo: we need to work fully interms of persistent and unique usernames!
 
         public bool JoinTable(string id1, string id2) {
-            var table = Table.Create();
+            //var table = Table.Create();
+            var table = UserManager.Tables.Where(i => i.Users.Select(j => j.ConnectionID).Contains(id1)).Single();
             var tableID = table.ID;
-            ///create a new table
-            ///determine a unique table id
-            ///
+            log.InfoFormat("{0} and {1} joining table: {2}", id1, id2, tableID);
             TableManager.Add(table);
             var u1 = UserManager.Get(id1);
             var u2 = UserManager.Get(id2);
-            u1.State = UserState.Playing;
-            u2.State = UserState.Playing;
             Clients.Client(id1).JoinTable(tableID);
             Clients.Client(id2).JoinTable(tableID);
             table.Users.Add(u1);
@@ -48,11 +46,9 @@ namespace RTS.Web.Hubs {
 
         public void CreateTable() {
             var u = UserManager.Users.Where(i => i.ConnectionID == Context.ConnectionId).SingleOrDefault();
-            if (u != null) {
-                u.State = UserState.WaitingAtTable;
-            }
+            var newTable = new Table(u);
+            UserManager.Tables.Add(newTable);
             Clients.All.waitingTablesChanged(UserManager.WaitingTables());
-            //return UserManager.TableIds;
         }
         private static int userCounter = 1;
 
@@ -72,7 +68,11 @@ namespace RTS.Web.Hubs {
             if (match != null) {
                 UserManager.Remove(connectionID);
                 Clients.All.connectedClientsChanged(UserManager.ConnectedUsers());
-                if (match.State == UserState.WaitingAtTable) {
+
+                if (match.CurrentTable != null) {
+                    var tableID = match.CurrentTable;
+                    var table = UserManager.Tables.Where(i => i.ID == tableID).Single();
+                    table.Remove(match);
                     Clients.All.waitingTablesChanged(UserManager.WaitingTables());
                 }
             }
@@ -84,12 +84,14 @@ namespace RTS.Web.Hubs {
 
         public static Dictionary<string, string> Usernames = new Dictionary<string,string>();
         public static List<ConnectedUser> Users = new List<ConnectedUser>();
-        public static List<string> WaitingTables() {
-            return Users.Where(i => i.State == UserState.WaitingAtTable).Select(i => i.ConnectionID).ToList();
+        public static List<Table> Tables = new List<Table>();
+        public static List<Table> WaitingTables() {
+            return Tables.Where(i => i.Users.Count() == 1).ToList();
+            //return Users.Where(i => i.State == UserState.WaitingAtTable).ToList();
         }
 
-        public static List<string> ConnectedUsers() {
-            return Users.Select(i => i.ConnectionID).ToList();
+        public static List<ConnectedUser> ConnectedUsers() {
+            return Users.ToList();
         }
 
         public static void Remove(string connectionID) {

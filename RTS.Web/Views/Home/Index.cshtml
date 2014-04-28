@@ -5,7 +5,7 @@
 <div ng-app="root">
     <div ng-controller="homeController" id="home" ng-cloak>
         <h4>{{username}}</h4>
-        <h4>{{myConnectionID}}</h4>
+        @*<h4>{{myConnectionID}}</h4>*@
         <div>
             <span>User name:</span>
             <input type="text" ng-model="usernameInput" />
@@ -13,12 +13,14 @@
         </div>
         <h2>All Connections:</h2>
         <div ng-repeat="c in clients track by $index">
-            {{c}}
+            <div ng-if="c.Name != username">
+                {{c.Name}}
+             </div>
         </div>
         <h2>Waiting Tables:</h2>
         <div ng-repeat="c in tables track by $index">
             <button class="btn btn-sm btn-default" ng-click="joinTable(c)">Join</button>
-            {{c}}
+            {{c.AsString}}
         </div>
 
         <button class="btn btn-large" ng-click="createTable()">Create Table</button>

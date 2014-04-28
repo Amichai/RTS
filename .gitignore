@@ -5,3 +5,5 @@ RTS.sln
 RTS.Web/obj/
 RTS/bin/
 RTS/obj/
+us.stackdump
+RTS.Web/Properties/

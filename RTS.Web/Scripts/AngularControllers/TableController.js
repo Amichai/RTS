@@ -9,7 +9,7 @@
             $scope.myConnectionID = result;
             $scope.$apply();
         });
-    });
+    });    
 
     $scope.addMessage = function () {
         hub.server.newMessage(QueryString.username, QueryString.id, $scope.inputText).done(function (result) {
@@ -48,6 +48,11 @@
     }();
 
     $scope.username = QueryString.username;
+    $scope.tableID = QueryString.id;
+
+    $http.get(baseUrl + 'api/tableapi/gettable?id=' + QueryString.id).success(function (table) {
+        $scope.table = table;
+    });
 }]);
 
 

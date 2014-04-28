@@ -204,6 +204,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiControllers\TableAPIController.cs" />
     <Compile Include="Controllers\ApiControllers\HomeAPIController.cs" />
     <Compile Include="Controllers\TableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -566,6 +567,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <None Include="Properties\PublishProfiles\azure.pubxml" />
+    <None Include="Properties\PublishProfiles\gplatform.pubxml" />
+    <None Include="Properties\PublishProfiles\RTS.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

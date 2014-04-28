@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RTS.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,11 +8,11 @@ using System.Web.Http;
 
 namespace RTS.Web.Controllers.ApiControllers {
     public class HomeAPIController : ApiController {
-        public List<string> GetConnectedClients() {
+        public List<ConnectedUser> GetConnectedClients() {
             return Hubs.UserManager.ConnectedUsers();
         }
 
-        public List<string> GetWaitingTables() {
+        public List<Table> GetWaitingTables() {
             return Hubs.UserManager.WaitingTables();
         }
 

@@ -10,7 +10,20 @@ namespace RTS.Web.Models {
             this.Users = new List<ConnectedUser>();
             this.State = new List<string>();
         }
-        public int ID { get; set; }
+
+        public string AsString {
+            get {
+                return string.Format("ID: {0}, Connected: {1}", 
+                    this.ID, 
+                    string.Join(", ", this.Users.Select(i => i.Name)));
+            }
+        }
+
+        public Table(ConnectedUser u) : this(){
+            this.AddUser(u);
+        }
+
+        public int ID { get; private set; }
         public List<ConnectedUser> Users { get; set; }
 
         public static int idCounter = 0;
@@ -20,6 +33,15 @@ namespace RTS.Web.Models {
         }
 
         public List<string> State { get; set; }
+
+        internal void AddUser(ConnectedUser u) {
+            this.Users.Add(u);
+            u.CurrentTable = this.ID;
+        }
+
+        internal void Remove(ConnectedUser match) {
+            this.Users.Remove(match);
+        }
     }
 
     public static class TableManager {
