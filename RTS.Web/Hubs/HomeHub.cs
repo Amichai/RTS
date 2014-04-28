@@ -95,9 +95,11 @@ namespace RTS.Web.Hubs {
         }
 
         public static void Remove(string connectionID) {
-            var match = Users.Where(i => i.ConnectionID == connectionID).SingleOrDefault();
-            if (match != null) {
-                Users.Remove(match);
+            lock (Users) {
+                var match = Users.Where(i => i.ConnectionID == connectionID).SingleOrDefault();
+                if (match != null) {
+                    Users.Remove(match);
+                }
             }
         }
 
@@ -107,10 +109,12 @@ namespace RTS.Web.Hubs {
 
         public static void Add(string connectionID) {
             ///check that this user doesn't exist already
-            if (Users.Where(i => i.ConnectionID == connectionID).Count() > 0) {
-                return;
+            lock (Users) {
+                if (Users.Where(i => i.ConnectionID == connectionID).Count() > 0) {
+                    return;
+                }
+                Users.Add(new ConnectedUser(connectionID));
             }
-            Users.Add(new ConnectedUser(connectionID));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace RTS.Web.Models {
         public Table() {
             this.ID = idCounter++;
             this.Users = new List<ConnectedUser>();
-            this.State = new List<string>();
+            this.State = new BoardState();
         }
 
         public string AsString {
@@ -32,7 +32,7 @@ namespace RTS.Web.Models {
             return new Table();
         }
 
-        public List<string> State { get; set; }
+        public BoardState State { get; set; }
 
         internal void AddUser(ConnectedUser u) {
             this.Users.Add(u);
@@ -56,11 +56,11 @@ namespace RTS.Web.Models {
 
         public static Table Update(int tableID, string msg, string connectionID) {
             var t = Get(tableID);
-            t.State.Add(msg);
+            t.State.Add(msg, connectionID);
             return t;
         }
 
-        public static List<string> GetState(int id) {
+        public static BoardState GetState(int id) {
             return Tables.Where(i => i.ID == id).Single().State;
         }
 

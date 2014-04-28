@@ -18,7 +18,7 @@ namespace RTS.Web.Hubs {
             //context.Clients.All.ConnectionEstablished();    
         }
 
-        public List<string> NewMessage(string username, int tableID, string text) {
+        public BoardState NewMessage(string username, int tableID, string text) {
             var t = TableManager.Update(tableID, text, username);
             var state = TableManager.GetState(tableID);
             

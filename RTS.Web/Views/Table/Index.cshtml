@@ -13,12 +13,10 @@
         <div ng-repeat="u in table.Users">
             {{u.Name}}
         </div>
-
+            
         <h3>Board States:</h3>
 
-        <div ng-repeat="m in messages track by $index">
-            {{m}}
-        </div>
+        <div ng-bind-html="state"></div>
         <div>
             <input ng-model="inputText" type="text" ng-enter="addMessage()" />
         </div>

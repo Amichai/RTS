@@ -216,6 +216,7 @@
     <Compile Include="Hubs\HomeHub.cs" />
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BoardState.cs" />
     <Compile Include="Models\ConnectedUser.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

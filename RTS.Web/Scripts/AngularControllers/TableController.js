@@ -1,6 +1,5 @@
 ﻿var app = angular.module('root', [])
-.controller('tableController', ['$scope', '$http', function ($scope, $http) {
-    $scope.messages = new Array();
+.controller('tableController', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
 
 
     var hub = $.connection.TableHub;
@@ -13,14 +12,15 @@
 
     $scope.addMessage = function () {
         hub.server.newMessage(QueryString.username, QueryString.id, $scope.inputText).done(function (result) {
-            $scope.messages = result;
+            $scope.state =  $sce.trustAsHtml(result.AsString);
             $scope.inputText = '';
             $scope.$apply();
         });
     }
 
-    hub.client.State = function (state) {
-        $scope.messages = state;
+    hub.client.State = function (result) {
+        $scope.state = $sce.trustAsHtml(result.AsString);
+        //$scope.state = $scope.state.replace("\n", "tt");
         $scope.$apply();
     }
 
