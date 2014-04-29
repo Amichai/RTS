@@ -2,6 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using RTS.Web.Models;
+using RTS.Web.Models.BoardStateModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace RTS.Web.Hubs {
             //context.Clients.All.ConnectionEstablished();    
         }
 
-        public BoardState NewMessage(string username, int tableID, string text) {
+        public IVisual NewMessage(string username, int tableID, string text) {
             var t = TableManager.Update(tableID, text, username);
             var state = TableManager.GetState(tableID);
             

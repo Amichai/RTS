@@ -216,7 +216,11 @@
     <Compile Include="Hubs\HomeHub.cs" />
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\BoardState.cs" />
+    <Compile Include="Models\BoardStateModels\BoardState.cs" />
+    <Compile Include="Models\BoardStateModels\Cell.cs" />
+    <Compile Include="Models\BoardStateModels\CellLatice.cs" />
+    <Compile Include="Models\BoardStateModels\CSSStyle.cs" />
+    <Compile Include="Models\BoardStateModels\IVisual.cs" />
     <Compile Include="Models\ConnectedUser.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,14 +12,14 @@
 
     $scope.addMessage = function () {
         hub.server.newMessage(QueryString.username, QueryString.id, $scope.inputText).done(function (result) {
-            $scope.state =  $sce.trustAsHtml(result.AsString);
+            $scope.state =  $sce.trustAsHtml(result.ToHtml);
             $scope.inputText = '';
             $scope.$apply();
         });
     }
 
     hub.client.State = function (result) {
-        $scope.state = $sce.trustAsHtml(result.AsString);
+        $scope.state = $sce.trustAsHtml(result.ToHtml);
         //$scope.state = $scope.state.replace("\n", "tt");
         $scope.$apply();
     }
