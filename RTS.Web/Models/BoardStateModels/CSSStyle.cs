@@ -25,8 +25,8 @@ namespace RTS.Web.Models.BoardStateModels {
             get {
                 return this.styles[i].Val;
             }
-            set {
-                this.styles[i].Val = i;
+            set {               
+                this.Add(i, value);
             }
         }
 
@@ -34,14 +34,18 @@ namespace RTS.Web.Models.BoardStateModels {
 
         public override string ToString() {
             string toReturn = "";
-            foreach (var s in this.styles) {
-                toReturn += string.Format("{0}:{1};", s.Key, s.Value);
+            lock (this.styles) {
+                foreach (var s in this.styles) {
+                    toReturn += string.Format("{0}:{1};", s.Key, s.Value);
+                }
             }
             return toReturn;
         }
 
         public void Add(string key, string val) {
-            this.styles[key] = new cssVal(val);
+            lock (this.styles) {
+                this.styles[key] = new cssVal(val);
+            }
         }
 
         public int Width {

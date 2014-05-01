@@ -1,4 +1,5 @@
-﻿using RTS.Web.Models.BoardStateModels;
+﻿using RTS.Web.Hubs;
+using RTS.Web.Models.BoardStateModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace RTS.Web.Models {
         public Table() {
             this.ID = idCounter++;
             this.Users = new List<ConnectedUser>();
-            this.State = new CellLatice(5, 2);
+            //this.State = new CellLatice(5, 5);
+            this.State = new Arena(300, 500);
         }
 
         public string AsString {
@@ -24,7 +26,7 @@ namespace RTS.Web.Models {
             this.AddUser(u);
         }
 
-        public int ID { get; private set; }
+        public int ID { get; set; }
         public List<ConnectedUser> Users { get; set; }
 
         public static int idCounter = 0;
@@ -62,7 +64,15 @@ namespace RTS.Web.Models {
         }
 
         public static IVisual GetState(int id) {
-            return Tables.Where(i => i.ID == id).Single().State;
+            var table = Tables.Where(i => i.ID == id).SingleOrDefault();
+            if (table == null) {
+                var newTable = new Table();
+                newTable.ID = id;
+                TableManager.Tables.Add(newTable);
+                return newTable.State;
+            } else {
+                return table.State;
+            }
         }
 
         public static List<Table> Tables = new List<Table>();

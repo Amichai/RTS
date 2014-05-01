@@ -59,6 +59,19 @@
     $http.get(baseUrl + 'api/tableapi/gettable?id=' + QueryString.id).success(function (table) {
         $scope.table = table;
     });
+
+    $("html").keypress(function (e) {
+        hub.server.newMessage(QueryString.username, QueryString.id, e.keyCode).done(function (result) {
+            $scope.state = $sce.trustAsHtml(result.ToHtml);
+            $scope.inputText = '';
+            $scope.$apply();
+        });
+    });
+
+    //$scope.keyPress = function (ev) {
+    //    debugger;
+        
+    //}
 }]);
 
 

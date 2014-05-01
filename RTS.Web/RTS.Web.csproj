@@ -216,7 +216,9 @@
     <Compile Include="Hubs\HomeHub.cs" />
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BoardStateModels\Arena.cs" />
     <Compile Include="Models\BoardStateModels\BoardState.cs" />
+    <Compile Include="Models\BoardStateModels\Brick.cs" />
     <Compile Include="Models\BoardStateModels\Cell.cs" />
     <Compile Include="Models\BoardStateModels\CellLatice.cs" />
     <Compile Include="Models\BoardStateModels\CSSStyle.cs" />
@@ -665,7 +667,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>7878</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:54413/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

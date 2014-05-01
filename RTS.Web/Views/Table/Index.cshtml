@@ -5,8 +5,8 @@
 
 
 
-<div ng-app="root">
-    <div ng-controller="tableController" ng-cloak>
+<div ng-app="root" id="root">
+    <div ng-controller="tableController" ng-cloak >
         <h2>Table - {{tableID}}</h2>
         <h4>{{username}}</h4>        
         <h3>Connected:</h3>
@@ -16,7 +16,7 @@
             
         <h3>Board States:</h3>
 
-        <div ng-bind-html="state"></div>
+        <div ng-bind-html="state" ng-keypress="keyPress($event)"></div>
         <div>
             <input ng-model="inputText" type="text" ng-enter="addMessage()" />
         </div>
