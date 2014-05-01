@@ -8,6 +8,9 @@
             $scope.myConnectionID = result;
             $scope.$apply();
         });
+        hub.server.getCurrentState(QueryString.id).done(function (result) {
+            setState(result);
+        });
     });    
 
     $scope.addMessage = function () {
@@ -18,10 +21,13 @@
         });
     }
 
-    hub.client.State = function (result) {
-        $scope.state = $sce.trustAsHtml(result.ToHtml);
-        //$scope.state = $scope.state.replace("\n", "tt");
+    function setState(state) {
+        $scope.state = $sce.trustAsHtml(state.ToHtml);
         $scope.$apply();
+    }
+
+    hub.client.State = function (result) {
+        setState(result);
     }
 
     var QueryString = function () {

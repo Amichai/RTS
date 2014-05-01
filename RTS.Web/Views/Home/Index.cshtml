@@ -8,8 +8,8 @@
         @*<h4>{{myConnectionID}}</h4>*@
         <div>
             <span>User name:</span>
-            <input type="text" ng-model="usernameInput" />
-            <button class="btn btn-sm btn-default" ng-click="updateName(c)">Update</button>            
+            <input type="text" ng-model="usernameInput" ng-enter="updateName()"/>
+            <button class="btn btn-sm btn-default" ng-click="updateName()">Update</button>
         </div>
         <h2>All Connections:</h2>
         <div ng-repeat="c in clients track by $index">

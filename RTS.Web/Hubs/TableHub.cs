@@ -28,6 +28,11 @@ namespace RTS.Web.Hubs {
             return state;
         }
 
+        public IVisual GetCurrentState(int tableID) {
+            var state = TableManager.GetState(tableID);
+            return state;
+        }
+
         public string MyConnectionID(string username) {
             var id = Context.ConnectionId;
             UserManager.Usernames[username] = id;

@@ -1,4 +1,4 @@
-﻿angular.module('root', [])
+﻿var app = angular.module('root', [])
 .controller('homeController', ['$scope', '$http', function ($scope, $http) {
 
     var hub = $.connection.HomeHub;
@@ -58,3 +58,16 @@
         });
     }
 }]);
+
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter);
+                });
+                event.preventDefault();
+            }
+        });
+    };
+});
