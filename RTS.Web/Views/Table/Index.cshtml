@@ -16,7 +16,7 @@
             
         <h3>Board States:</h3>
 
-        <div ng-bind-html="state" ng-keypress="keyPress($event)"></div>
+        <div id="boardState" ng-keypress="keyPress($event)"></div>
         <div>
             <input ng-model="inputText" type="text" ng-enter="addMessage()" />
         </div>
@@ -26,4 +26,5 @@
 @section scripts {
     <script src="~/Scripts/angularcontrollers/tableController.js"></script>
     <script src='~/signalr/js'></script>
+    <script src="~/Scripts/d3.v3.js"></script>
 }

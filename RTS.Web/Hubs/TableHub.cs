@@ -19,7 +19,7 @@ namespace RTS.Web.Hubs {
             //context.Clients.All.ConnectionEstablished();    
         }
 
-        public IVisual NewMessage(string username, int tableID, string text) {
+        public BoardState2 NewMessage(string username, int tableID, string text) {
             var t = TableManager.Update(tableID, text, username);
             var state = TableManager.GetState(tableID);
             
@@ -28,7 +28,7 @@ namespace RTS.Web.Hubs {
             return state;
         }
 
-        public IVisual GetCurrentState(int tableID) {
+        public BoardState2 GetCurrentState(int tableID) {
             var state = TableManager.GetState(tableID);
             return state;
         }

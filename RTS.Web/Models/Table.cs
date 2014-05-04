@@ -11,7 +11,7 @@ namespace RTS.Web.Models {
             this.ID = idCounter++;
             this.Users = new List<ConnectedUser>();
             //this.State = new CellLatice(5, 5);
-            this.State = new Arena(300, 500);
+            this.State = new BoardState2();
         }
 
         public string AsString {
@@ -35,7 +35,7 @@ namespace RTS.Web.Models {
             return new Table();
         }
 
-        public IVisual State { get; set; }
+        public BoardState2 State { get; set; }
 
         internal void AddUser(ConnectedUser u) {
             this.Users.Add(u);
@@ -63,7 +63,7 @@ namespace RTS.Web.Models {
             return t;
         }
 
-        public static IVisual GetState(int id) {
+        public static BoardState2 GetState(int id) {
             var table = Tables.Where(i => i.ID == id).SingleOrDefault();
             if (table == null) {
                 var newTable = new Table();
