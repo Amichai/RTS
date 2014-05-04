@@ -15,6 +15,8 @@ namespace RTS.Web.Models {
 
         public string Name { get; set; }
         public string ConnectionID { get; set; }
+
+        public bool Perspective { get; set; }
         //public UserState State { get; set; }
     }
     //public enum UserState { WaitingAtTable, Playing, Idle };

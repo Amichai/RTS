@@ -12,6 +12,7 @@ namespace RTS.Web.Models.BoardStateModels {
             this.Height = height;
             this.Color = "gray";
             this.Styles = new Styles();
+            this.Styles["position"] = "absolute";
         }
 
         public string ToHtml {
@@ -44,6 +45,25 @@ namespace RTS.Web.Models.BoardStateModels {
         public Styles Styles {
             get;
             set;
+        }
+
+        internal IVisual Reflect(int height) {
+            var v = this.Clone() as Brick;
+            v.Y = height - v.Y;
+            return v;
+        }
+
+        public IVisual Clone() {
+            List<IVisual> children = null;
+            if (this.Children != null) {
+                children = this.Children.Select(i => i.Clone()).ToList();
+            }
+            var toReturn = new Brick(this.X, this.Y, this.Width, this.Height){
+                Color = this.Color,
+                Styles = this.Styles.Clone(),
+            };
+            toReturn.Children = children;
+            return toReturn;
         }
     }
 }

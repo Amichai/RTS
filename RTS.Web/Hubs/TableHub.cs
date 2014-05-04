@@ -22,13 +22,16 @@ namespace RTS.Web.Hubs {
         public IVisual NewMessage(string username, int tableID, string text) {
             var t = TableManager.Update(tableID, text, username);
             var state = TableManager.GetState(tableID);
-            
-            var otherPlayers = t.Users.Where(i => i.Name != username).Select(i => UserManager.Usernames[i.Name]).ToList();
-            Clients.Clients(otherPlayers).State(state);
+            var otherUser = t.Users.Where(i => i.Name != username).Single();
+            //var otherPlayers = t.Users.Where(i => i.Name != username).Select(i => UserManager.Usernames[i.Name]).ToList();
+            (state as Arena).Perspective = otherUser.Perspective;
+            var otherPlayers = new List<string>() { UserManager.Usernames[otherUser.Name] };
+            Clients.Clients(otherPlayers).State(state.Clone());
+            (state as Arena).Perspective = !otherUser.Perspective;
             return state;
         }
 
-        public IVisual GetCurrentState(int tableID) {
+        public IVisual GetCurrentState(int tableID, string username) {
             var state = TableManager.GetState(tableID);
             return state;
         }

@@ -10,5 +10,6 @@ namespace RTS.Web.Models.BoardStateModels {
         List<IVisual> Children { get; set; }
         void Input(string i, string connectionID);
         Styles Styles { get; set; }
+        IVisual Clone();
     }
 }

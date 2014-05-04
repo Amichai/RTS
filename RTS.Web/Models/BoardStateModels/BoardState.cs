@@ -24,5 +24,9 @@ namespace RTS.Web.Models {
         public void Input(string i, string connectionID) {
             this.vals.Add(i + " " + connectionID);
         }
+
+        public IVisual Clone() {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -71,7 +71,8 @@ namespace RTS.Web.Models {
                 TableManager.Tables.Add(newTable);
                 return newTable.State;
             } else {
-                return table.State;
+                var state = table.State;
+                return state;
             }
         }
 

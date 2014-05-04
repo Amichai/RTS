@@ -19,6 +19,9 @@ namespace RTS.Web.Models.BoardStateModels {
         }
         public Styles Styles { get; set; }
 
+        public IVisual Clone() {
+            throw new NotImplementedException();
+        }
 
         private string getChildrenString() {
             string toReturn = "";

@@ -48,6 +48,10 @@ namespace RTS.Web.Models.BoardStateModels {
             }
         }
 
+        public void AddPx(string key, string val) {
+            this.Add(key, val + "px");
+        }
+
         public int Width {
             get {
                 return int.Parse(this.styles["width"].Val);
@@ -71,6 +75,14 @@ namespace RTS.Web.Models.BoardStateModels {
                 }
                 this.styles["height"].Val = value.ToString();
             }
+        }
+
+        internal Styles Clone() {
+            var toReturn = new Styles();
+            foreach (var i in this.styles) {
+                toReturn.styles[i.Key] = i.Value;
+            }
+            return toReturn;
         }
     }
 }

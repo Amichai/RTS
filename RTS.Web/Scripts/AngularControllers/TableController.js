@@ -8,7 +8,7 @@
             $scope.myConnectionID = result;
             $scope.$apply();
         });
-        hub.server.getCurrentState(QueryString.id).done(function (result) {
+        hub.server.getCurrentState(QueryString.id, QueryString.username).done(function (result) {
             setState(result);
         });
     });    

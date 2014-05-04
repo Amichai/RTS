@@ -25,6 +25,10 @@ namespace RTS.Web.Models.BoardStateModels {
             this.Styles.Width++;
         }
 
+        public IVisual Clone() {
+            throw new NotImplementedException();
+        }
+
         public Styles Styles { get; set; }
 
         public List<IVisual> Children {

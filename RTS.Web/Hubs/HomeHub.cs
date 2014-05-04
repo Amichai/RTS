@@ -39,8 +39,11 @@ namespace RTS.Web.Hubs {
             var u2 = UserManager.Get(id2);
             Clients.Client(id1).JoinTable(tableID);
             Clients.Client(id2).JoinTable(tableID);
+            u1.Perspective = true;
+            u2.Perspective = false;
             table.Users.Add(u1);
             table.Users.Add(u2);
+
             return true;
         }
 
