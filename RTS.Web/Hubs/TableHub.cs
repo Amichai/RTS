@@ -6,6 +6,7 @@ using RTS.Web.Models.BoardStateModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -20,9 +21,10 @@ namespace RTS.Web.Hubs {
         }
 
         public BoardState2 NewMessage(string username, int tableID, string text) {
+            log.InfoFormat("New message {0}", text);
             var t = TableManager.Update(tableID, text, username);
             var state = TableManager.GetState(tableID);
-            
+
             var otherPlayers = t.Users.Where(i => i.Name != username).Select(i => UserManager.Usernames[i.Name]).ToList();
             Clients.Clients(otherPlayers).State(state);
             return state;
@@ -44,6 +46,7 @@ namespace RTS.Web.Hubs {
         }
 
         public override Task OnDisconnected() {
+            log.InfoFormat("Disconnected: {0}", Context.ConnectionId);
             return base.OnDisconnected();
         }
     }

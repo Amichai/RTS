@@ -11,7 +11,7 @@ namespace RTS.Web.Models {
             this.ID = idCounter++;
             this.Users = new List<ConnectedUser>();
             //this.State = new CellLatice(5, 5);
-            this.State = new BoardState2();
+            this.State = new BoardState2(10, 10);
         }
 
         public string AsString {

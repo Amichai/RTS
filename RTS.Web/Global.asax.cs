@@ -1,4 +1,7 @@
-﻿using System;
+﻿using log4net;
+using log4net.Config;
+using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +15,13 @@ namespace RTS.Web {
     // visit http://go.microsoft.com/?LinkId=9394801
 
     public class MvcApplication : System.Web.HttpApplication {
+        private static readonly ILog log = LogManager.GetLogger(typeof(MvcApplication));
+
         protected void Application_Start() {
+
+            XmlConfigurator.Configure();
+            log.InfoFormat("Application initialized");
+
             AreaRegistration.RegisterAllAreas();
             System.Net.ServicePointManager.DefaultConnectionLimit = 1000;
             WebApiConfig.Register(GlobalConfiguration.Configuration);

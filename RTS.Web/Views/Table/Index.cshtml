@@ -3,7 +3,7 @@
 }
 
 
-
+<link href="~/Content/Site.css" rel="stylesheet" />
 
 <div ng-app="root" id="root">
     <div ng-controller="tableController" ng-cloak >
@@ -17,9 +17,6 @@
         <h3>Board States:</h3>
 
         <div id="boardState" ng-keypress="keyPress($event)"></div>
-        <div>
-            <input ng-model="inputText" type="text" ng-enter="addMessage()" />
-        </div>
     </div>
 </div>
 
