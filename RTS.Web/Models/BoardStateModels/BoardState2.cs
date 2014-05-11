@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using log4net;
 
 namespace RTS.Web.Models.BoardStateModels {
     public class BoardState2 {
+        ILog log = LogManager.GetLogger(typeof(BoardState2));
+
         public BoardState2(int width, int height) {
             this.width = width;
             this.height = height;
@@ -42,6 +45,14 @@ namespace RTS.Web.Models.BoardStateModels {
         }
 
         internal void Input(string msg, string username, bool orientation) {
+            if (msg == "32") {
+                if (orientation) {
+                    this.lattice.Reserve(orientation, p1.Position);
+                } else {
+                    this.lattice.Reserve(orientation, p2.Position);
+                }
+                return;
+            }
             var dir = getDirection(msg, orientation);
             if (orientation) {
                 this.p1.UpdatePosition(dir);

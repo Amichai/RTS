@@ -10,6 +10,7 @@ namespace RTS.Web.Models.BoardStateModels {
         public CellLatice(int width, int height) {
             this.width = width;
             this.height = height;
+            this.increments = new Dictionary<Pos, int>();
         }
 
         private List<List<int>> cells;
@@ -32,11 +33,28 @@ namespace RTS.Web.Models.BoardStateModels {
             cells[p.Position.Y][p.Position.X] = i;
         }
 
+        private void incr(Pos p, int i) {
+            cells[p.Y][p.X] += i;
+        }
+
         public List<List<int>> GetCells(Person p1, Person p2) {
             cells = this.getEmptyBoard();
             setVal(p1, 1);
             setVal(p2, 2);
+            foreach (var inc in increments) {
+                incr(inc.Key, inc.Value);
+            }
             return this.cells;
+        }
+
+        private Dictionary<Pos, int> increments;
+
+        internal void Reserve(bool orientation, Pos p) {
+            if (orientation) {
+                this.increments[p.Clone()] = 10;
+            } else {
+                this.increments[p.Clone()] = 20;
+            }
         }
     }
 }
