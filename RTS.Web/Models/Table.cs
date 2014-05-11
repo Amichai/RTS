@@ -57,12 +57,6 @@ namespace RTS.Web.Models {
             return Tables.Where(i => i.ID == tableID).Single();
         }
 
-        public static Table Update(int tableID, string msg, string connectionID) {
-            var t = Get(tableID);
-            t.State.Input(msg, connectionID);
-            return t;
-        }
-
         public static BoardState2 GetState(int id) {
             var table = Tables.Where(i => i.ID == id).SingleOrDefault();
             if (table == null) {

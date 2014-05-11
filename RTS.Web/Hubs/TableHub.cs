@@ -22,7 +22,8 @@ namespace RTS.Web.Hubs {
 
         public BoardState2 NewMessage(string username, int tableID, string text) {
             log.InfoFormat("New message {0}", text);
-            var t = TableManager.Update(tableID, text, username);
+            var t = TableManager.Get(tableID);
+            t.State.Input(text, username, t.Users[0].Name == username);
             var state = TableManager.GetState(tableID);
 
             var otherPlayers = t.Users.Where(i => i.Name != username).Select(i => UserManager.Usernames[i.Name]).ToList();

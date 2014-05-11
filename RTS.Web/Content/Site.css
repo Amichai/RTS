@@ -759,7 +759,7 @@ tr.pager td {
 .cell {
     display: inline !important;
     font-weight: bold;
-    background-color: red;
+    background-color: #A68400;
     padding: 10px;
     line-height: 34px;
     padding:3px 10px 3px 10px;
@@ -768,7 +768,7 @@ tr.pager td {
 .border{
     display: inline !important;
     font-weight: bold;
-    background-color: green;
+    background-color: #180773;
     padding: 8px;
     line-height: 30px;
 }

@@ -15,10 +15,7 @@
 
     var updated = true;
 
-    function setState(state) {
-        $('#boardState').html('')
-        var data = state.State;
-
+    function p1(data) {
         for (var i = 0; i < data.length; i++) {
             var col = data[i];
             for (var j = 0; j < col.length; j++) {
@@ -27,6 +24,29 @@
             }
             $('#boardState').append('<br />');
         }
+    }
+
+    function p2(data) {
+        for (var i = data.length - 1; i >= 0; i--) {
+            var col = data[i];
+            for (var j = 0; j < col.length; j++) {
+                var val = col[j];
+                $('#boardState').append('<div class="border"><div class="cell">' + val + '</div></div>');
+            }
+            $('#boardState').append('<br />');
+        }
+    }
+
+    function setState(state) {
+        $('#boardState').html('')
+        var data = state.State;
+        if ($scope.firstPlayer) {
+            p1(data);
+        } else {
+            p2(data);
+        }
+
+
         $scope.$apply();
     }
 
@@ -62,6 +82,11 @@
 
     $http.get(baseUrl + 'api/tableapi/gettable?id=' + QueryString.id).success(function (table) {
         $scope.table = table;
+        if (table.Users[0].Name == $scope.username) {
+            $scope.firstPlayer = true;
+        } else {
+            $scope.firstPlayer = false;
+        }
     });
 
     $("html").keypress(function (e) {

@@ -17,39 +17,52 @@ namespace RTS.Web.Models.BoardStateModels {
                     this.State[i].Add(0);
                 }
             }
-            this.p = new pos() {
+            this.p1 = new pos() {
                 X = width / 2,
-                Y = height / 2,
+                Y = height / 2 - 2,
+            };
+
+            this.p2 = new pos() {
+                X = width / 2,
+                Y = height / 2 + 2,
             };
         }
         public List<List<int>> State { get; set; }
 
         private int width, height;
 
-        private pos p;
+        private pos p1, p2;
         
 
-        internal void Input(string msg, string connectionID) {
-            var newP = p.Clone();
+        internal void Input(string msg, string username, bool orientation) {
+            if (orientation) {
+                move(msg, 1, ref p1);
+            } else {
+                move(msg, 2, ref p2);
+            }
+        }
+
+        private void move(string msg, int glyph, ref pos currentPosition) {
+            var newP = currentPosition.Clone();
             switch (msg) {
                 case "119": ///w
-                    newP.Y = (p.Y - 1);
+                    newP.Y = (currentPosition.Y - 1);
                     break;
                 case "115": // s
-                    newP.Y = (p.Y + 1);
+                    newP.Y = (currentPosition.Y + 1);
                     break;
                 case "97": //a
-                    newP.X = (p.X - 1);
+                    newP.X = (currentPosition.X - 1);
                     break;
                 case "100": // d
-                    newP.X = (p.X + 1);
+                    newP.X = (currentPosition.X + 1);
                     break;
             }
             newP.Normalize(width, height);
-            this.State[p.Y][p.X] = 0;
-            this.State[newP.Y][newP.X] = 1;
+            this.State[currentPosition.Y][currentPosition.X] = 0;
+            this.State[newP.Y][newP.X] = glyph;
 
-            p = newP.Clone();
+            currentPosition = newP.Clone();
         }
     }
 
