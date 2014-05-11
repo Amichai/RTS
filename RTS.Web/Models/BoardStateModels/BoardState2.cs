@@ -20,7 +20,7 @@ namespace RTS.Web.Models.BoardStateModels {
 
         private CellLatice lattice;
 
-        public List<List<int>> State {
+        public List<List<Cell>> State {
             get {
                 return lattice.GetCells(p1, p2);
             }

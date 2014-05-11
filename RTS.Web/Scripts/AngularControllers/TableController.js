@@ -20,7 +20,7 @@
             var col = data[i];
             for (var j = 0; j < col.length; j++) {
                 var val = col[j];
-                $('#boardState').append('<div class="border"><div class="cell">' + val + '</div></div>');
+                $('#boardState').append('<div class="border"><div class="cell background' + val.Background + '">' + val.Foreground + '</div></div>');
             }
             $('#boardState').append('<br />');
         }
@@ -31,7 +31,7 @@
             var col = data[i];
             for (var j = 0; j < col.length; j++) {
                 var val = col[j];
-                $('#boardState').append('<div class="border"><div class="cell">' + val + '</div></div>');
+                $('#boardState').append('<div class="border"><div class="cell background' + val.Background + '">' + val.Foreground + '</div></div>');
             }
             $('#boardState').append('<br />');
         }

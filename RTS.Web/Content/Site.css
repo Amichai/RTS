@@ -772,3 +772,13 @@ tr.pager td {
     padding: 8px;
     line-height: 30px;
 }
+
+.background10 {
+
+    background-color: white !important;
+}
+
+.background20 {
+
+    background-color: lightblue !important;
+}

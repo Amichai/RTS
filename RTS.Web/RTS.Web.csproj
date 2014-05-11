@@ -217,6 +217,7 @@
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BoardStateModels\BoardState2.cs" />
+    <Compile Include="Models\BoardStateModels\Cell.cs" />
     <Compile Include="Models\BoardStateModels\CellLatice.cs" />
     <Compile Include="Models\BoardStateModels\Person.cs" />
     <Compile Include="Models\BoardStateModels\Pos.cs" />
