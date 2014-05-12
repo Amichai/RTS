@@ -34,5 +34,25 @@ namespace RTS.Web.Models.BoardStateModels {
                 Y -= height;
             }
         }
+
+        public override bool Equals(object obj) {
+            if (obj == null) {
+                return false;
+            }
+
+            var p = obj as Pos;
+            return this.Equals(p);
+        }
+
+        public bool Equals(Pos obj) {
+            if (obj == null) {
+                return false;
+            }
+            return this.X == obj.X && this.Y == obj.Y;
+        }
+
+        public override int GetHashCode() {
+            return this.X ^ this.Y;
+        }
     }
 }

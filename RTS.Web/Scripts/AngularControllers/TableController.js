@@ -20,7 +20,8 @@
             var col = data[i];
             for (var j = 0; j < col.length; j++) {
                 var val = col[j];
-                $('#boardState').append('<div class="border"><div class="cell background' + val.Background + '">' + val.Foreground + '</div></div>');
+                $('#boardState').append('<div class="border"><div \
+                    class="cell background' + val.Background + '">' + val.Foreground + '</div></div>');
             }
             $('#boardState').append('<br />');
         }
@@ -37,6 +38,7 @@
         }
     }
 
+
     function setState(state) {
         $('#boardState').html('')
         var data = state.State;
@@ -46,6 +48,10 @@
             p2(data);
         }
 
+        if (state.Winner != undefined) {
+            ///TODO: The glyphs/assets A, B should be defined on the server only
+            $scope.winner = state.Winner ? 'A' : 'B';
+        }
 
         $scope.$apply();
     }
@@ -89,8 +95,18 @@
         }
     });
 
+    $scope.playAgain = function () {
+        $scope.winner = undefined;
+        hub.server.reset(QueryString.username, QueryString.id).done(function (result) {
+            setState(result);
+        });
+    }
+
     $("html").keypress(function (e) {
         if (!updated) {
+            return;
+        }
+        if ($scope.winner != undefined) {
             return;
         }
         updated = false;

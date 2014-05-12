@@ -573,6 +573,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\azure.pubxml" />
+    <None Include="Properties\PublishProfiles\gplatform - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gplatform - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\gplatform.pubxml" />
     <None Include="Properties\PublishProfiles\RTS.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />

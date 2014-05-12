@@ -14,9 +14,12 @@
             {{u.Name}}
         </div>
             
-        <h3>Board States:</h3>
+        <h2 ng-show="winner != undefined">PLAYER {{winner}} WINS!</h2>
 
         <div id="boardState" ng-keypress="keyPress($event)"></div>
+
+        <button ng-show="winner != undefined" class="btn btn-large" ng-click="playAgain()">Play Again</button>
+        
     </div>
 </div>
 
