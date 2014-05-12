@@ -90,7 +90,7 @@ namespace RTS.Web.Models.BoardStateModels {
             }
         }
 
-        public void PushBricks(Pos startPosition, Pos endPosition, bool pusher) {
+        public void PushBricks(Pos startPosition, Pos endPosition, Pos opponentPos, bool pusher) {
             var pushable = this.orintationToBackgroundVal[pusher];
             var dx = endPosition.X - startPosition.X;
             var dy = endPosition.Y - startPosition.Y;
@@ -106,6 +106,10 @@ namespace RTS.Web.Models.BoardStateModels {
                 };
                 next.Normalize(this.width, this.height);
                 current = next;
+
+                if (current.Equals(opponentPos)) {
+                    this.Winner = pusher;
+                }
 
                 if (!this.background.ContainsKey(next)) {
                     break;

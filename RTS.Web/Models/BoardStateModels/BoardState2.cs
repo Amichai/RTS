@@ -72,16 +72,20 @@ namespace RTS.Web.Models.BoardStateModels {
                 return;
             }
             var dir = getDirection(msg, orientation);
-            move(dir, orientation ? p1 : p2, orientation);
+            
+            move(dir, 
+                orientation ? p1 : p2,
+                orientation ? p2 : p1,  
+                orientation);
         }
         
-        private void move(Direction dir, Person p, bool orientation) {
+        private void move(Direction dir, Person p, Person other, bool orientation) {
             Pos newPos;
             newPos = this.calculateNewPosition(dir, p.Position);
             if (this.lattice.IsReserved(newPos, orientation)) {
                 return;
             }
-            this.lattice.PushBricks(p.Position, newPos, orientation);
+            this.lattice.PushBricks(p.Position, newPos, other.Position, orientation);
             p.SetPosition(newPos);
         }
 
