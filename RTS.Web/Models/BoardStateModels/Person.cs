@@ -29,7 +29,11 @@ namespace RTS.Web.Models.BoardStateModels {
             }
         }
 
-        public Pos Position { get; set; }
+        public void SetPosition(Pos p) {
+            this.Position = p;
+        }
+
+        public Pos Position { get; private set; }
     }
 
     public enum Direction { up, down, right, left, none };

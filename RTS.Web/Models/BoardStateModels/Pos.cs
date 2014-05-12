@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
 namespace RTS.Web.Models.BoardStateModels {
+    [DebuggerDisplay("({X}, {Y})")]
     public class Pos {
         public Pos Clone() {
             return new Pos() {

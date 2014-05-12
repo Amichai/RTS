@@ -59,5 +59,18 @@ namespace RTS.Web.Models.BoardStateModels {
                 this.background[p.Clone()] = 20;
             }
         }
+
+        public Cell this[Pos i] {
+            get {
+                return this.cells[i.X][i.Y];
+            }
+            set {
+                this.cells[i.X][i.Y] = value;
+            }
+        }
+
+        internal bool IsReserved(Pos newPos) {
+            return this[newPos].Background >= 10;
+        }
     }
 }

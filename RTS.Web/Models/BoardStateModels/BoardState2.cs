@@ -44,6 +44,25 @@ namespace RTS.Web.Models.BoardStateModels {
             return Direction.none;
         }
 
+        private Pos calculateNewPosition(Direction dir, Pos p) {
+            var newPosition = p.Clone();
+            switch (dir) {
+                case Direction.up:
+                    newPosition.Y--;
+                    break;
+                case Direction.down:
+                    newPosition.Y++;
+                    break;
+                case Direction.right:
+                    newPosition.X--;
+                    break;
+                case Direction.left:
+                    newPosition.X++;
+                    break;
+            }
+            return newPosition;
+        }
+
         internal void Input(string msg, string username, bool orientation) {
             if (msg == "32") {
                 if (orientation) {
@@ -54,11 +73,21 @@ namespace RTS.Web.Models.BoardStateModels {
                 return;
             }
             var dir = getDirection(msg, orientation);
+            Pos newPos;
             if (orientation) {
-                this.p1.UpdatePosition(dir);
+                move(dir, p1);
             } else {
-                this.p2.UpdatePosition(dir);
+                move(dir, p2);
             }
+        }
+
+        private Pos move(Direction dir, Person p) {
+            Pos newPos;
+            newPos = this.calculateNewPosition(dir, p.Position);
+            if (!this.lattice.IsReserved(newPos)) {
+                p.SetPosition(newPos);
+            }
+            return newPos;
         }
     }
 }
