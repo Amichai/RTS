@@ -16,7 +16,7 @@ namespace RTS.Web.Models.BoardStateModels {
 
         private CellLatice lattice;
 
-        public bool? Winner {
+        public string Winner {
             get {
                 return this.lattice.Winner;
             }

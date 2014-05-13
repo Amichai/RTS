@@ -50,7 +50,7 @@
 
         if (state.Winner != undefined) {
             ///TODO: The glyphs/assets A, B should be defined on the server only
-            $scope.winner = state.Winner ? 'A' : 'B';
+            $scope.winner = state.Winner;
         }
 
         $scope.$apply();

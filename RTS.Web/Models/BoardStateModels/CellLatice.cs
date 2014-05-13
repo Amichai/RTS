@@ -32,10 +32,20 @@ namespace RTS.Web.Models.BoardStateModels {
             return emptyBoard;
         }
 
+        private static string playerAGlyph = "A";
+        private static string playerBGlyph = "B";
+
+
         private Dictionary<int, string> cellGlyph = new Dictionary<int, string>() {
              { 0, "_"},
-             { 1, "A"},
-             { 2, "B"},
+             { 1, playerAGlyph },
+             { 2, playerBGlyph },
+             { 3, "C"}
+        };
+
+        private Dictionary<bool, string> playerGlyph = new Dictionary<bool, string>() {
+            { true, playerAGlyph },
+            { false, playerBGlyph }
         };
 
         private void setVal(Person p, int i) {
@@ -47,12 +57,16 @@ namespace RTS.Web.Models.BoardStateModels {
             this[p].Background = i;
         }
 
-        public bool? Winner { get; set; }
+        public string Winner { get; set; }
 
         public List<List<Cell>> GetCells(Person p1, Person p2) {
             cells = this.getEmptyBoard();
-            setVal(p1, 1);
-            setVal(p2, 2);
+            if (p1.Position.Equals(p2.Position)) {
+                setVal(p1, 3);
+            } else {
+                setVal(p1, 1);
+                setVal(p2, 2);
+            }
             foreach (var inc in background) {
                 incr(inc.Key, inc.Value);
             }
@@ -60,11 +74,11 @@ namespace RTS.Web.Models.BoardStateModels {
             var p2DeathVal = this.orintationToBackgroundVal[true];
 
             if (this[p1.Position].Background == p1DeathVal) {
-                this.Winner = false;
+                this.Winner = this.playerGlyph[false];
             }
 
             if (this[p2.Position].Background == p2DeathVal) {
-                this.Winner = true;
+                this.Winner = this.playerGlyph[true];
             }
             return this.cells;
         }
@@ -99,7 +113,16 @@ namespace RTS.Web.Models.BoardStateModels {
             }
 
             var current = endPosition.Clone();
-            while (true) {
+            int maxIdx = 0;
+            if (dx != 0) {
+                maxIdx = width;
+            }
+            if (dy != 0) {
+                maxIdx = height;
+            }
+
+            bool allowed = false;
+            for (int i = 0; i < maxIdx; i++){
                 var next = new Pos() {
                     X = current.X + dx,
                     Y = current.Y + dy
@@ -108,12 +131,16 @@ namespace RTS.Web.Models.BoardStateModels {
                 current = next;
 
                 if (current.Equals(opponentPos)) {
-                    this.Winner = pusher;
+                    this.Winner = this.playerGlyph[pusher];
                 }
 
                 if (!this.background.ContainsKey(next)) {
+                    allowed = true;
                     break;
                 }
+            }
+            if (!allowed) {
+                return;
             }
 
             var b = this.background[endPosition];
